@@ -67,12 +67,12 @@ function gameLogic(string){
     if(string.charCodeAt(0) > randWord.charCodeAt(0)){
 
         wordArrDown.push(string);
-        wordArrDown.sort();
+        sortDown(string)
 
     }else if(string.charCodeAt(0) < randWord.charCodeAt(0)){
 
         wordArrUp.push(string);
-        wordArrUp.sort();
+        sortUp(string);
 
     }else if(string.charCodeAt(0) == randWord.charCodeAt(0)){
 
@@ -85,10 +85,10 @@ function gameLogic(string){
         }
         if(string.charCodeAt(lettersCounter) < randWord.charCodeAt(lettersCounter)){
             wordArrUp.push(string);
-            wordArrUp.sort();
+            sortUp(string)
         }else if(string.charCodeAt(lettersCounter) > randWord.charCodeAt(lettersCounter)){
             wordArrDown.push(string);
-            wordArrDown.sort();
+            sortDown(string)
         }
     }
 }
@@ -115,3 +115,17 @@ function listDownAdd() {
     }
   }
   
+  function sortUp(word) {
+    return wordArrUp.sort((a, b) => {
+      const distA = a.toLowerCase().indexOf(word.toLowerCase());
+      const distB = b.toLowerCase().indexOf(word.toLowerCase());
+      return distA - distB;
+    });
+  }
+  function sortDown(word) {
+    return wordArrDown.sort((a, b) => {
+      const distA = a.toLowerCase().indexOf(word.toLowerCase());
+      const distB = b.toLowerCase().indexOf(word.toLowerCase());
+      return distB - distA;
+    });
+  }
