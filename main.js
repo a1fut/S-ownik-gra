@@ -9,6 +9,9 @@ const wordsPossible = [
 let win = false;
 const listItemsUp = document.querySelectorAll('.up');
 const listItemsDown = document.querySelectorAll('.down');
+const winWindow = document.querySelector('.winWindow');
+const triesMessage = document.querySelector('.tries');
+const tooShortPopup = document.querySelector('.tooShort')
 let lettersCounter = 0;
 let wordArrUp = [];
 let wordArrDown = [];
@@ -20,9 +23,10 @@ document.addEventListener('keydown', (e) => {
     if(e.key == "Enter"){
         if(!containsNumbers(inputWord.value)){
             if(inputWord.value.length < 2){
-            alert('za krótkie');
+                tooShortPopup.classList.remove('hidden')
             }else{
-                word = inputWord.value
+                tooShortPopup.classList.add('hidden')
+                word = inputWord.value.toLowerCase()
                 console.log(word);
                 gameLogic(word)
                 tries++;
@@ -33,8 +37,11 @@ document.addEventListener('keydown', (e) => {
                 inputWord.value = ''
                 if(word == randWord){
                     win = true;
-                    alert("wygrana");
-                    alert("udało ci się w " + tries + " próbach" );
+                    winWindow.classList.remove('hidden')
+                    if(tries === 1){
+                        triesMessage.innerHTML = `Udało ci się w 1 próbie! Brawo!`
+                    }else
+                    triesMessage.innerHTML = `Udało ci się w ${tries} próbach!`
                 }
             }
         }else alert('nie może być liczby');
@@ -108,17 +115,3 @@ function listDownAdd() {
     }
   }
   
-
-console.log(listItemsUp.length)
-function wordInNumbers(str){
-    let strNumber = 0;
-    for(let i = 0; i<str.length; i++){
-        strNumber += str.charCodeAt(i)
-    }
-    return strNumber;
-}
-function differenceBetweenWords(word1, word2){
-    return wordInNumbers(word1) - wordInNumbers(word2)
-}
-
-
